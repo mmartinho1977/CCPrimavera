@@ -1,0 +1,6 @@
+﻿DIFERENÇA ENTRE Pendente e PendenteCCT
+
+A classe Pendente implementa efetivamente um pendente que pode ser enviado ao motor do erp para ser gravado
+
+A classe PendenteCCT é um versão minimalista do Pendente e é usado apenas para questões de listagem, ou seja, 
+só contem as propriedades necessárias a uma listagem de pendentes.

@@ -1,0 +1,52 @@
+﻿===================  Com Visiblility  =======================================================================
+- Deve ser colocado o atributo <ComClass()> de classe 
+	em TODAS AS CLASSES que se pretendam ser visiveis a partir de COM
+	(antes da classe que se pretende ser ComVisible)
+- Deve ser seleccionado nas Propriedades do projecto: Make Assembly Com-Visible
+- Deve ser seleccionado nas Propriedades do projecto: Register for Com interop
+
+
+========== REFERENCIAS NECESSÁRIAS A DLLS PRIMAVERA ==========================================================
+IMPORTANTE:
+  -> Embebed Interop Types = false  (para não ser guardada qualquer informação de vínculo com as DLLs)
+  -> Copy Local = false (para não duplicar as DLLs para as pastas do executável)
+
+LOCALIZAÇÃO: ?:\Program Files (x86)\Common files\PRIMAVERA\SG900\...
+   > ADODB.dll
+   > Interop.ErpBS900.dll
+   > Interop.ErpDS900.dll
+   > Interop.GcpBE900.dll
+   > Interop.IGcpBS900.dll
+   > Interop.IRhpBS900.dll
+   > Interop.StdBE900.dll
+   > Interop.StdPlatBS900.dll
+
+
+==================  Resolução de Assemblys  ================================================================
+O código que existe no construtor do Motor.VB, programa um handler do evento AssemblyResolve do dominio atual
+	AddHandler AppDomain.CurrentDomain.AssemblyResolve, AddressOf CurrentDomain_AssemblyResolve)
+para que, quando exista um erro no "encontrar" de uma Assembly requerida pela aplicação, seja executado um bloco
+de código (CurrentDomain_AssemblyResolve) para indicar uma Assembly alternativa a ser usada (neste caso irá
+indicar sempre um interop que exista dentro da pasta common files)
+
+NOTA IMPORTANTE: Quando se migrar entre versões principais (ex: v8 -> v9) tem que atualizar o caminho do 
+				 commonFiles em Motor.Vb > New()
+
+
+==================== CONTADORES =============================================================================
+
+DEVE EXISTIR UMA TABELA TDU_Contadores (que faz a gestão dos ultimos numeros de Clientes, Fornecedores, etc.)
+	- CDU_Contador(pk)	string //identificador do contador ex: Clientes, Fornecedores, Artigos, ...
+	- CDU_UltimoNumero	inteiro
+	- CDU_Mascara		string //para criação Ex: C?????, F?????
+
+	ESTA TABELA DEVE TER 3 linhas cujas pk, devem corresponder ao conteudo do enum ContadoresTipo
+				(muito importante)
+				o contador a incrementar é passado por tipo enumerador para os metodos de incrementação
+
+
+
+
+
+
+

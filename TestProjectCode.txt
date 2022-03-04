@@ -1,0 +1,30 @@
+﻿/*
+             *  Este bloco testa o funcionamento geral do CCPrimavera
+             * Foi criado aquando da implementação do AssemblyResolve()
+             */
+
+            CCPrimavera.Motor motor = new CCPrimavera.Motor("Data Source=STRAUSS\PRIMAVERA; User ID=sa; Password=Pt.216997305;", "TESTE5", "cc", "aaa");
+
+            CCPrimavera.BE.Cliente c;
+            CCPrimavera.BE.DocumentoVenda dv;
+
+            for (int i = 0; i < 6; i++)
+            {
+                // carregar dados
+                c = motor.Clientes.Edita("C001");
+                dv = motor.Vendas.Edita("000", "FA", "A", 10);
+
+                // mudar dados
+                c.Morada2 = "morada2: " + DateTime.Now.ToString("hh:mm:ss:fff");
+                dv.Requisicao = "req: " + DateTime.Now.ToString("hh:mm:ss:fff");
+
+                // enviar novas versões
+                motor.Clientes.Actualiza(ref c);
+                motor.Vendas.Actualiza(ref dv);
+
+                // pausa
+                Console.WriteLine("morada2: {0} | requisicao:{1};", c.Morada2, dv.Requisicao);
+            }
+
+            Console.ReadKey();
+            motor = null;
